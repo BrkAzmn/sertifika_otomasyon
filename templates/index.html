@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sertifika Doğrulama</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        input {
+            padding: 10px;
+            width: 300px;
+            margin: 10px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+        .certificate-container {
+            margin-top: 20px;
+            padding: 20px;
+            border: 2px solid #ccc;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <h2>Sertifikanızı Doğrulayın</h2>
+    <form method="POST">
+        <label for="verification_code">Doğrulama Kodunu Girin:</label>
+        <br>
+        <input type="text" id="verification_code" name="verification_code" required>
+        <br>
+        <button type="submit">Sorgula</button>
+    </form>
+
+    {% if error_message %}
+        <p class="error">{{ error_message }}</p>
+    {% endif %}
+
+    {% if certificate_info %}
+        <div class="certificate-container">
+            <h3>Sertifika Bilgileri</h3>
+            <p><strong>Ad Soyad:</strong> {{ certificate_info.ad }} {{ certificate_info.soyad }}</p>
+            <p><strong>Eğitim Adı:</strong> {{ certificate_info.egitim_adi }}</p>
+            <br>
+            <a href="{{ url_for('download', path=certificate_info.sertifika_yolu) }}">
+                <button>Sertifikayı İndir</button>
+            </a>
+        </div>
+    {% endif %}
+</body>
+</html>
