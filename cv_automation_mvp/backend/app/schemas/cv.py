@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, EmailStr, Field
 
 
 class ExperienceItem(BaseModel):
@@ -9,7 +9,7 @@ class ExperienceItem(BaseModel):
 
 class CandidateProfile(BaseModel):
     full_name: str = Field(..., min_length=3)
-    email: str
+    email: EmailStr
     skills: list[str] = Field(default_factory=list)
     experiences: list[ExperienceItem] = Field(default_factory=list)
 
@@ -23,6 +23,6 @@ class CVGenerateRequest(BaseModel):
 
 class CVGenerateResponse(BaseModel):
     job_title: str
-    ats_score: int
+    ats_score: int = Field(..., ge=0, le=100)
     missing_keywords: list[str]
     cv_markdown: str
